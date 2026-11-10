@@ -238,3 +238,23 @@ Refer to `AI_USAGE.md` for details about AI tools used during development and th
 **Anuruddha Kumar Pandey**
 
 Python Full Stack Developer
+
+
+
+
+
+## 13. Testing Scope
+
+The project was tested during development using application-level manual verification and automated unit tests.
+
+Automated tests currently cover the calculation module, including:
+- Valid total calculations.
+- Empty input handling.
+- Missing values.
+- Invalid quantity and rate values.
+- Negative values.
+
+Run automated tests:
+
+```bash
+python -m pytest -v
