@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Sales Summary</title>
+</head>
+<body>
+
+    <h2>Product Sales Summary</h2>
+
+    <form method="GET">
+        <label>Start Date:</label>
+        <input type="date" name="start_date"
+               value="{{ start_date }}">
+
+        <label>End Date:</label>
+        <input type="date" name="end_date"
+               value="{{ end_date }}">
+
+        <button type="submit">Filter</button>
+
+        <a href="{{ url_for('reports.product_sales_report') }}">
+            Reset
+        </a>
+    </form>
+
+    <br>
+
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Code</th>
+                <th>Product Name</th>
+                <th>Total Quantity Sold</th>
+                <th>Total Sales</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.product_code }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.total_quantity }}</td>
+                <td>₹{{ "%.2f"|format(product.total_sales) }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">No products found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    <a href="{{ url_for('reports.reports_dashboard') }}">
+        Back to Reports
+    </a>
+
+</body>
+</html>

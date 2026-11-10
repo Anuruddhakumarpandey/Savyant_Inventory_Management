@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Sales Order</title>
+</head>
+<body>
+
+    <h2>Create Sales Order</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+        <p style="color:red;">{{ message }}</p>
+    {% endfor %}
+{% endwith %}
+
+    <form method="POST">
+
+        <label>Select Customer:</label>
+
+        <select name="customer_id" required>
+            <option value="">Select Customer</option>
+
+            {% for customer in customers %}
+            <option value="{{ customer.id }}">
+                {{ customer.name }}
+            </option>
+            {% endfor %}
+
+        </select>
+
+        <br><br>
+
+        <label>Discount (%):</label>
+        <input
+            type="number"
+            name="discount_percent"
+            min="0"
+            max="20"
+            step="0.01"
+            value="0"
+            required
+        >
+
+        <br><br>
+
+        <h3>Products</h3>
+
+        {% for product in products %}
+
+        <div>
+            <label>
+                {{ product.name }}
+                (₹{{ product.price }})
+                - Available Stock: {{ product.stock_quantity }}
+            </label>
+
+            <input
+                type="number"
+                name="quantity_{{ product.id }}"
+                min="0"
+                placeholder="Quantity"
+            >
+        </div>
+
+        <br>
+
+        {% endfor %}
+
+        <button type="submit">Create Draft Order</button>
+
+    </form>
+
+    <br>
+
+    <a href="{{ url_for('sales_orders.sales_order_list') }}">
+        Back to Sales Orders
+    </a>
+
+</body>
+</html>

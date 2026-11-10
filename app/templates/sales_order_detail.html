@@ -1,0 +1,67 @@
+
+
+{% block content %}
+
+<h2>Sales Order Details</h2>
+
+<p><strong>Order Number:</strong> {{ order.order_number }}</p>
+<p><strong>Status:</strong> {{ order.status }}</p>
+<p><strong>Discount:</strong> {{ order.discount_percent }}%</p>
+<p><strong>Subtotal:</strong> ₹{{ order.subtotal }}</p>
+<p><strong>Discount Amount:</strong> ₹{{ order.discount_amount }}</p>
+<p><strong>Grand Total:</strong> ₹{{ order.grand_total }}</p>
+
+{% if order.status == "Draft" %}
+
+<form method="POST"
+      action="{{ url_for('sales_orders.update_order_status', order_id=order.id) }}">
+
+    <button type="submit" name="action" value="confirm">
+        Confirm Order
+    </button>
+
+    <button type="submit" name="action" value="cancel">
+        Cancel Order
+    </button>
+
+</form>
+
+{% elif order.status == "Confirmed" %}
+
+<form method="POST"
+      action="{{ url_for('sales_orders.update_order_status', order_id=order.id) }}">
+
+    <button type="submit" name="action" value="cancel">
+        Cancel Order
+    </button>
+
+</form>
+
+{% endif %}
+
+
+<h3>Order Items</h3>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Rate</th>
+        <th>Amount</th>
+    </tr>
+
+    {% for item, product in items %}
+    <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>₹{{ item.rate }}</td>
+        <td>₹{{ item.amount }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<a href="{{ url_for('sales_orders.sales_order_list') }}">Back to Sales Orders</a>
+
+{% endblock %}

@@ -1,0 +1,5 @@
+product_code,product_name,category,price,stock_quantity,status
+PRD301,Keyboard,Electronics,750,20,Active
+PRD302,Mouse,Electronics,350,30,Active
+PRD303,Notebook,Stationery,80,50,Active
+PRD304,USB Cable,Accessories,150,25,Inactive

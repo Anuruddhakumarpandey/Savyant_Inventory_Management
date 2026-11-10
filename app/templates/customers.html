@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Management</title>
+</head>
+<body>
+
+    <h1>Customer Management</h1>
+
+    <a href="/">Back to Dashboard</a>
+
+    <hr>
+
+    <h3>Customer List</h3>
+
+<form method="GET" action="{{ url_for('customers.customer_list') }}">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search name, email, mobile or city"
+        value="{{ search }}"
+    >
+
+    <select name="status">
+        <option value="">All Customers</option>
+
+        <option value="active"
+            {% if status == "active" %}selected{% endif %}>
+            Active
+        </option>
+
+        <option value="inactive"
+            {% if status == "inactive" %}selected{% endif %}>
+            Inactive
+        </option>
+    </select>
+
+    <button type="submit">Search</button>
+
+    <a href="{{ url_for('customers.customer_list') }}">Reset</a>
+
+</form>
+
+
+    <a href="{{ url_for('customers.add_customer') }}">
+    <button type="button">+ Add Customer</button>
+</a>
+
+<br><br>
+
+    {% if customers %}
+        <table border="1" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>City</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.id }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.email or '-' }}</td>
+                    <td>{{ customer.mobile or '-' }}</td>
+                    <td>{{ customer.city or '-' }}</td>
+                    <td>
+                        {{ 'Active' if customer.is_active else 'Inactive' }}
+                    </td>
+                    <td>
+    <a href="{{ url_for('customers.edit_customer', customer_id=customer.id) }}">
+        Edit
+    </a>
+       <form method="POST"
+      action="{{ url_for('customers.deactivate_customer', customer_id=customer.id) }}"
+      style="display:inline;">
+
+    {% if customer.is_active %}
+        <button type="submit">Deactivate</button>
+    {% endif %}
+
+</form>
+
+{% if not customer.is_active %}
+<form method="POST"
+      action="{{ url_for('customers.reactivate_customer', customer_id=customer.id) }}"
+      style="display:inline;">
+
+    <button type="submit">Reactivate</button>
+
+</form>
+{% endif %}
+
+</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No customers found.</p>
+    {% endif %}
+
+</body>
+</html>

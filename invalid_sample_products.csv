@@ -1,0 +1,6 @@
+product_code,product_name,category,price,stock_quantity,status
+PRD401,Monitor,Electronics,-8500,10,Active
+PRD402,Laptop,Electronics,50000,5,Active
+PRD402,Keyboard,Electronics,750,20,Active
+PRD403,Mouse,Electronics,350,-5,Active
+PRD404,USB Cable,Accessories,150,10,Unknown

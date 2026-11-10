@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Low Stock Report</title>
+</head>
+<body>
+
+    <h2>Low Stock Report</h2>
+
+    <form method="GET">
+        <label>Stock Threshold:</label>
+
+        <input type="number"
+               name="threshold"
+               min="0"
+               value="{{ threshold }}">
+
+        <button type="submit">Filter</button>
+
+        <a href="{{ url_for('reports.low_stock_report') }}">
+            Reset
+        </a>
+    </form>
+
+    <br>
+
+    <table border="1" cellpadding="10">
+
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Code</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Available Stock</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.product_code }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category or 'N/A' }}</td>
+                <td>{{ product.stock_quantity }}</td>
+            </tr>
+
+            {% else %}
+            <tr>
+                <td colspan="5">No low stock products found.</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <a href="{{ url_for('reports.reports_dashboard') }}">
+        Back to Reports
+    </a>
+
+</body>
+</html>

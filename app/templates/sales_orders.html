@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales Orders</title>
+</head>
+<body>
+
+    <h2>Sales Order Management</h2>
+
+    <a href="{{ url_for('inventory.inventory_list') }}">Back to Inventory</a>
+
+    <br><br>
+
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Order Number</th>
+                <th>Customer ID</th>
+                <th>Order Date</th>
+                <th>Status</th>
+                <th>Grand Total</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for order in orders %}
+            <a href="{{ url_for('sales_orders.sales_order_detail', order_id=order.id) }}">
+    View Details
+</a>
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.order_number }}</td>
+                <td>{{ order.customer_id }}</td>
+                <td>{{ order.order_date }}</td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.grand_total }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6">No sales orders found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

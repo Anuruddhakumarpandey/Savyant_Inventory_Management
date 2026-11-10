@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+</head>
+<body>
+
+    <h1>{{ 'Edit Product' if product else 'Add New Product' }}</h1>
+
+    <form method="POST" action="{{ url_for('products.edit_product', product_id=product.id) if product else url_for('products.add_product') }}">
+
+        <label>Product Code:</label>
+        <input type="text" name="product_code"
+       value="{{ product.product_code if product else '' }}" required>
+        <br><br>
+
+        <label>Product Name:</label>
+        <input type="text" name="name"
+       value="{{ product.name if product else '' }}" required>
+        <br><br>
+
+        <label>Category:</label>
+        <input type="text" name="category"
+       value="{{ product.category if product and product.category else '' }}">
+        <br><br>
+
+        <label>Price:</label>
+        <input type="number" name="price"
+       value="{{ product.price if product else '' }}"
+       min="0" step="0.01" required>
+        <br><br>
+
+        <label>Opening Stock:</label>
+        <input type="number" name="stock_quantity" min="0" step="1" required>
+        <br><br>
+
+        <button type="submit">
+    {{ 'Update Product' if product else 'Save Product' }}
+</button>
+
+    </form>
+
+    <br>
+
+    <a href="{{ url_for('products.product_list') }}">Back to Product List</a>
+
+</body>
+</html>

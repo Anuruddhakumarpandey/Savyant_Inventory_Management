@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+</head>
+<body>
+
+    <h1>Product Management</h1>
+
+    <a href="/">Back to Dashboard</a>
+
+    <hr>
+
+    <h3>Product List</h3>
+
+<form method="GET" action="{{ url_for('products.product_list') }}">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search product name, code or category"
+        value="{{ search }}"
+    >
+
+   <select name="status">
+
+    <option value="">All Products</option>
+
+    <option value="active"
+        {% if status == "active" %}selected{% endif %}>
+        Active
+    </option>
+
+    <option value="inactive"
+        {% if status == "inactive" %}selected{% endif %}>
+        Inactive
+    </option>
+
+</select>
+
+<select name="category">
+
+    <option value="">All Categories</option>
+
+    {% for cat in categories %}
+        <option value="{{ cat }}"
+            {% if category == cat %}selected{% endif %}>
+            {{ cat }}
+        </option>
+    {% endfor %}
+
+</select>
+
+    <button type="submit">Search</button>
+
+    <a href="{{ url_for('products.product_list') }}">Reset</a>
+
+</form>
+
+
+
+    <a href="{{ url_for('products.add_product') }}">
+    <button type="button">+ Add Product</button>
+</a>
+
+<br><br>
+    {% if products %}
+        <table border="1" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product Code</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock Quantity</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.product_code }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.category or '-' }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.stock_quantity }}</td>
+                    <td>
+                        {{ 'Active' if product.is_active else 'Inactive' }}
+                    </td>
+                    <td>
+    <a href="{{ url_for('products.edit_product', product_id=product.id) }}">
+        Edit
+    </a>
+   <form method="POST"
+      action="{{ url_for('products.deactivate_product', product_id=product.id) }}"
+      style="display:inline;">
+
+    {% if product.is_active %}
+        <button type="submit">Deactivate</button>
+    {% endif %}
+
+</form>
+
+{% if not product.is_active %}
+<form method="POST"
+      action="{{ url_for('products.reactivate_product', product_id=product.id) }}"
+      style="display:inline;">
+
+    <button type="submit">Reactivate</button>
+
+</form>
+{% endif %}
+
+</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No products found.</p>
+    {% endif %}
+
+</body>
+</html>

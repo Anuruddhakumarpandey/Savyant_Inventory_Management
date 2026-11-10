@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Movement History</title>
+</head>
+<body>
+
+    <h2>Stock Movement History</h2>
+
+    <a href="{{ url_for('inventory.inventory_list') }}">
+        Back to Inventory
+    </a>
+
+    <br><br>
+
+<a href="{{ url_for('inventory.stock_history') }}">
+    View Stock Movement History
+</a>
+
+    <hr>
+
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Product Code</th>
+                <th>Movement Type</th>
+                <th>Quantity Change</th>
+                <th>Reason</th>
+                <th>Date & Time</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for movement, product_name, product_code in movements %}
+            <tr>
+                <td>{{ product_name }}</td>
+                <td>{{ product_code }}</td>
+                <td>{{ movement.movement_type }}</td>
+                <td>{{ movement.quantity_change }}</td>
+                <td>{{ movement.reason }}</td>
+                <td>{{ movement.created_at }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6">No stock movement history found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adjust Stock</title>
+</head>
+<body>
+
+    <h2>Adjust Stock</h2>
+
+    <h3>Product: {{ product.name }}</h3>
+    <p>Product Code: {{ product.product_code }}</p>
+    <p>Current Stock: {{ product.stock_quantity }}</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endwith %}
+
+    <form method="POST">
+
+        <label>Movement Type:</label>
+        <select name="movement_type" required>
+            <option value="">Select Type</option>
+            <option value="IN">Stock In</option>
+            <option value="OUT">Stock Out</option>
+        </select>
+
+        <br><br>
+
+        <label>Quantity:</label>
+        <input type="number" name="quantity" min="1" required>
+
+        <br><br>
+
+        <label>Reason:</label>
+        <input type="text" name="reason" required>
+
+        <br><br>
+
+        <button type="submit">Adjust Stock</button>
+
+    </form>
+
+    <br>
+
+    <a href="{{ url_for('inventory.inventory_list') }}">Back to Inventory</a>
+
+</body>
+</html>
