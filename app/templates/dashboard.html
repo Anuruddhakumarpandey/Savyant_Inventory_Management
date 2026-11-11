@@ -10,8 +10,40 @@
     <h1>Welcome to Savyant Inventory System</h1>
 
     <h3>Hello, {{ user.name }}!</h3>
-
     <p>Your Role: {{ user.role }}</p>
+
+    <hr>
+
+    <h2>Dashboard Navigation</h2>
+
+    {% if user.role == "Admin" %}
+
+        <h3>Customer Management</h3>
+        <a href="/customers">View Customers</a> |
+        <a href="/customers/add">Add Customer</a>
+
+        <h3>Product Management</h3>
+        <a href="/products">View Products</a> |
+        <a href="/products/add">Add Product</a> |
+        <a href="/products/import">Import Products CSV</a>
+
+        <h3>Inventory Management</h3>
+        <a href="/inventory">Manage Inventory</a> |
+        <a href="/inventory/history">Stock Movement History</a>
+
+        <h3>Reports</h3>
+        <a href="/reports">View Reports</a> |
+        <a href="/reports/customer-sales">Customer Sales</a> |
+        <a href="/reports/product-sales">Product Sales</a> |
+        <a href="/reports/low-stock">Low Stock Report</a>
+
+    {% endif %}
+
+    <h3>Sales Order Management</h3>
+    <a href="/sales-orders">View Sales Orders</a> |
+    <a href="/sales-orders/create">Create Sales Order</a>
+
+    <hr>
 
     <a href="{{ url_for('auth.logout') }}">Logout</a>
 
